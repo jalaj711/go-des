@@ -48,3 +48,13 @@ func leftRotateKey(key [7]byte, rotationAmount uint8) (rotatedKey [7]byte) {
 
 	return rotatedKey
 }
+
+// getRotatedRoundKeys takes the initial 56-bit key and generates 16 56-bit left-rotated keys for each round
+// the keys are shifted according to the key schedule defined in tables.go
+func getRotatedRoundKeys(key [7]byte) (rotatedRoundKeys [16][7]byte) {
+	rotatedRoundKeys[0] = leftRotateKey(key, KEY_ROTATION[0])
+	for i := 1; i < 16; i++ {
+		rotatedRoundKeys[i] = leftRotateKey(rotatedRoundKeys[i-1], KEY_ROTATION[i])
+	}
+	return rotatedRoundKeys
+}
