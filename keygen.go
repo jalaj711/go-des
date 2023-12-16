@@ -58,3 +58,20 @@ func getRotatedRoundKeys(key [7]byte) (rotatedRoundKeys [16][7]byte) {
 	}
 	return rotatedRoundKeys
 }
+
+func getPermutedRoundKeys(rotatedRoundKeys [16][7]byte) (permutedRoundKeys [16][6]byte) {
+	reduced := [6]byte{}
+	var temp byte = 0
+	for key_ind, key := range rotatedRoundKeys {
+		for ind, val := range KEY_PERMUTATION_CHOICE_2 {
+			if val%8 != 0 {
+				temp = (temp << 1) | ((key[(val-1)/8] >> (8 - val%8)) & 1)
+			} else {
+				temp = (temp << 1) | (key[(val-1)/8] & 1)
+			}
+			reduced[ind/8] = temp
+		}
+		permutedRoundKeys[key_ind] = reduced
+	}
+	return permutedRoundKeys
+}
