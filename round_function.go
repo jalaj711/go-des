@@ -53,3 +53,12 @@ func permutation(input [4]byte) (output [4]byte) {
 	}
 	return output
 }
+
+func round_function(input [4]byte, roundkey [6]byte) [4]byte {
+	xored_input := [6]byte{}
+	expanded := expand(input)
+	for i := 0; i < 6; i++ {
+		xored_input[i] = expanded[i] ^ roundkey[i]
+	}
+	return permutation(substituteFromSBox(xored_input))
+}

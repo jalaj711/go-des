@@ -33,3 +33,14 @@ func TestPermutation(t *testing.T) {
 		t.Fatalf(`Testcase: %b, result: %b, expected: %b`, test, key, expected)
 	}
 }
+
+func TestRoundFunction(t *testing.T) {
+	test_data := [4]byte{0b11110000, 0b10101010, 0b11110000, 0b10101010}
+	test_key := [6]byte{0b00011011, 0b00000010, 0b11101111, 0b11111100, 0b01110000, 0b01110010}
+	expected := [4]byte{0b00100011, 0b01001010, 0b10101001, 0b10111011}
+	out := round_function(test_data, test_key)
+	// t.Logf(`Testcase: %b, result: %d`, test, key)
+	if out != expected {
+		t.Fatalf(`Testcase: data=%b;key=%b, result: %b, expected: %b`, test_data, test_key, out, expected)
+	}
+}
