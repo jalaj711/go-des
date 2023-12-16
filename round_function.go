@@ -39,3 +39,17 @@ func substituteFromSBox(input [6]byte) (output [4]byte) {
 	}
 	return output
 }
+
+// permutation performs the final permutation of the round function f
+func permutation(input [4]byte) (output [4]byte) {
+	var temp byte = 0
+	for ind, val := range PERMUTATION {
+		if val%8 != 0 {
+			temp = (temp << 1) | ((input[(val-1)/8] >> (8 - val%8)) & 1)
+		} else {
+			temp = (temp << 1) | (input[(val-1)/8] & 1)
+		}
+		output[ind/8] = temp
+	}
+	return output
+}

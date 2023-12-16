@@ -23,3 +23,13 @@ func TestSBoxSubstitution(t *testing.T) {
 		t.Fatalf(`Testcase: %b, result: %b, expected: %b`, test, key, expected)
 	}
 }
+
+func TestPermutation(t *testing.T) {
+	test := [4]byte{0b01011100, 0b10000010, 0b10110101, 0b10010111}
+	expected := [4]byte{0b00100011, 0b01001010, 0b10101001, 0b10111011}
+	key := permutation(test)
+	// t.Logf(`Testcase: %b, result: %d`, test, key)
+	if key != expected {
+		t.Fatalf(`Testcase: %b, result: %b, expected: %b`, test, key, expected)
+	}
+}
