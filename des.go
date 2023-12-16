@@ -31,8 +31,8 @@ func Encrypt64(data [8]byte, key [8]byte) (encrypted [8]byte) {
 	return encrypted
 }
 
-// Decrypt64 takes 64-bit data block and encrypts it using a 64-bit key by applying DES
-func Decrypt64(data [8]byte, key [8]byte) (encrypted [8]byte) {
+// Decrypt64 takes 64-bit data block and decrypts it using a 64-bit key by applying DES
+func Decrypt64(data [8]byte, key [8]byte) (decrypted [8]byte) {
 	round_keys := getRoundKeys(key)
 
 	data = initial_permutation(data)
@@ -53,9 +53,9 @@ func Decrypt64(data [8]byte, key [8]byte) (encrypted [8]byte) {
 	}
 
 	// 32-bit swap
-	encrypted = [8]byte{R0[0], R0[1], R0[2], R0[3], L0[0], L0[1], L0[2], L0[3]}
+	decrypted = [8]byte{R0[0], R0[1], R0[2], R0[3], L0[0], L0[1], L0[2], L0[3]}
 
 	// IP-1
-	encrypted = inverse_initial_permutation(encrypted)
-	return encrypted
+	decrypted = inverse_initial_permutation(decrypted)
+	return decrypted
 }
