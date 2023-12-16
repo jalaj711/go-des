@@ -1,5 +1,7 @@
 package godes
 
+// getReducedKey takes the initial 64-bit key and contracts it to 56-bits.
+// It uses the `KEY_PERMUTATION_CHOICE_1` table defined in `tables.go`
 func getReducedKey(key [8]byte) [7]byte {
 	reduced := [7]byte{}
 	var temp byte = 0
@@ -50,7 +52,7 @@ func leftRotateKey(key [7]byte, rotationAmount uint8) (rotatedKey [7]byte) {
 }
 
 // getRotatedRoundKeys takes the initial 56-bit key and generates 16 56-bit left-rotated keys for each round
-// the keys are shifted according to the key schedule defined in tables.go
+// the keys are shifted according to the key schedule defined in `tables.go`
 func getRotatedRoundKeys(key [7]byte) (rotatedRoundKeys [16][7]byte) {
 	rotatedRoundKeys[0] = leftRotateKey(key, KEY_ROTATION[0])
 	for i := 1; i < 16; i++ {
@@ -59,6 +61,7 @@ func getRotatedRoundKeys(key [7]byte) (rotatedRoundKeys [16][7]byte) {
 	return rotatedRoundKeys
 }
 
+// getPermutedRoundKeys takes 56-bit rotated round keys and permutates each one of them to produce 48-bit round keys
 func getPermutedRoundKeys(rotatedRoundKeys [16][7]byte) (permutedRoundKeys [16][6]byte) {
 	reduced := [6]byte{}
 	var temp byte = 0
