@@ -75,3 +75,9 @@ func getPermutedRoundKeys(rotatedRoundKeys [16][7]byte) (permutedRoundKeys [16][
 	}
 	return permutedRoundKeys
 }
+
+// getRoundKeys function takes a 64-bit key and generates 16 48-bit round keys for each round
+func getRoundKeys(key [8]byte) (roundKeys [16][6]byte) {
+	roundKeys = getPermutedRoundKeys(getRotatedRoundKeys(getReducedKey(key)))
+	return roundKeys
+}
