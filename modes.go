@@ -64,3 +64,26 @@ func Decrypt_CFB8(ciphertext []byte, key [8]byte, iv [8]byte) (plaintext []byte,
 	}
 	return removePadding(plaintext)
 }
+
+func Encrypt_OFB(plaintext []byte, key [8]byte, nonce [8]byte) (ciphertext []byte, err error) {
+	plaintext = addPadding(plaintext)
+	ciphertext = make([]byte, len(plaintext))
+	for i := 0; i < len(plaintext); i += 8 {
+		nonce = Encrypt64(nonce, key)
+		for j := 0; j < 8; j++ {
+			ciphertext[i+j] = nonce[j] ^ plaintext[i+j]
+		}
+	}
+	return ciphertext, nil
+}
+
+func Decrypt_OFB(ciphertext []byte, key [8]byte, nonce [8]byte) (plaintext []byte, err error) {
+	plaintext = make([]byte, len(ciphertext))
+	for i := 0; i < len(ciphertext); i += 8 {
+		nonce = Encrypt64(nonce, key)
+		for j := 0; j < 8; j++ {
+			plaintext[i+j] = nonce[j] ^ ciphertext[i+j]
+		}
+	}
+	return removePadding(plaintext)
+}
