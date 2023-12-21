@@ -72,7 +72,7 @@ Function signature is
 func Decrypt_CBC(ciphertext []byte, key [8]byte, iv [8]byte) (plaintext []byte, err error)
 ```
 
-### Encrypt_CFB
+### Encrypt_CFB8
 
 Encrypts using DES in CFB mode with 8-bit transmission.
 
@@ -82,7 +82,7 @@ Function signature is
 func Encrypt_CFB8(plaintext []byte, key [8]byte, iv [8]byte) (ciphertext []byte, err error)
 ```
 
-### Decrypt_CFB
+### Decrypt_CFB8
 
 Decrypts using DES in CFB mode with 8-bit transmission.
 
@@ -111,3 +111,7 @@ Function signature is
 ```golang
 func Decrypt_OFB(ciphertext []byte, key [8]byte, nonce [8]byte) (plaintext []byte, err error)
 ```
+
+## Triple DES
+
+All the methods defined above are also available in their 3DES versions. Prefixing any of the methods above with `TripleDES128_` will give you it's 2 Key 3DES version. All such methods take 128-bit (16-byte) keys. Similiarly, prefixing with `TripleDES192_` will give you it's 3 Key 3DES version. These methods take 192-bit (24-byte) keys. Besides key-length all functions have the same signature as their normal DES counterparts.
